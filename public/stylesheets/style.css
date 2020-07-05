@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  text-align: center;
+  font-family: "Lucida Console";
+  font-size: 3rem;
+
+  background-image: url("https://wallpapercave.com/wp/iAlT4jH.jpg");
+  letter-spacing: 0.5em;
+  color: #00ff1d;
+  /* -webkit-text-stroke: 2px white; */
+}
+
+a {
+  color: #00B7FF;
+}
