@@ -4,21 +4,27 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 // var logger = require('morgan');
 var moment = require("moment");
+var mongoose = require('mongoose');
+
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-const { read } = require("fs");
+const {
+  read
+} = require("fs");
 
 var app = express();
 
-app.use(function (req, res, next) {
-  console.log(
-    `${req.protocol}://${req.get("host")}${
-      req.originalUrl
-    }: ${moment().format()}`
-  );
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT', 'POST', 'DEL', 'GET')
+    return res.status(200).json();
+  }
   next();
 });
+
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -26,7 +32,9 @@ app.set("view engine", "jade");
 
 // app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -49,9 +57,13 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-app.use(function (req, res, next) {
-  console.log("Time:", Date.now());
-  next();
-});
+
+// Db Schema
+
+
+
+
+
+
 
 module.exports = app;
