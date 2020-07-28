@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require("express");
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -15,7 +16,7 @@ const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 // connect to db
 const dbConnect = async () => {
   let db = null;
-  await mongoose.connect('mongodb://localhost/proggregdb', {
+  await mongoose.connect('mongodb+srv://greg:@cluster0.sw7y0.mongodb.net/<dbname>?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }, function () {}).catch(err => {
