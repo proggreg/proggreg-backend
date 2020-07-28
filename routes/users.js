@@ -22,8 +22,8 @@ const dbConnect = async () => {
     console.error(err.stack);
   });
   db = mongoose.connection;
-  // db.on('error', console.log.bind(console, 'connection refused !!!!!'));
-  // db.once('open', console.log.bind(console, 'connection success !!!!!'));
+  db.on('error', console.log.bind(console, 'connection refused !!!!!'));
+  db.once('open', console.log.bind(console, 'connection success !!!!!'));
 }
 
 // TODO Add error handling for connection to db
