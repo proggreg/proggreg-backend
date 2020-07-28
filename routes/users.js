@@ -24,7 +24,6 @@ const dbConnect = async () => {
     })
   } catch (error) {
     console.error(error);
-
   }
 }
 
@@ -84,6 +83,8 @@ router.post("/api/users/", (req, res) => {
   // }
 
   snakeScore.save(function (err, doc) {
+
+    console.log(err);
     if (err) return console.error(err);
     res.status(200).json({
       message: "new score added"
