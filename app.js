@@ -3,12 +3,14 @@ var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
+var cors = require('cors');
 const {
   read
 } = require("fs");
 
 var app = express();
 
+app.use(cors);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');

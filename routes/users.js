@@ -34,6 +34,8 @@ dbConnect();
 
 // Get All Users
 router.get("/api/users", async (req, res, next) => {
+
+  console.log(req);
   const scores = await snakeScores.find({});
 
   if (scores.length == 0) {
