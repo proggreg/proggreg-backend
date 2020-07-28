@@ -12,19 +12,20 @@ const snakeScoresSchema = new Schema({
   score: Number
 });
 
+
+
 const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 // connect to db
 const dbConnect = async () => {
   let db = null;
-  await mongoose.connect('mongodb+srv://greg:@cluster0.sw7y0.mongodb.net/<dbname>?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }, function () {}).catch(err => {
-    console.error(err.stack);
-  });
-  db = mongoose.connection;
-  db.on('error', console.log.bind(console, 'connection refused !!!!!'));
-  db.once('open', console.log.bind(console, 'connection success !!!!!'));
+  try {
+    await mongoose.connect(process.env.DB_URL, {
+      useNewUrlParser: true
+    })
+  } catch (error) {
+    console.error(error);
+
+  }
 }
 
 // TODO Add error handling for connection to db
@@ -60,12 +61,14 @@ router.get("/api/users", async (req, res, next) => {
 
 // Create User
 router.post("/api/users/", (req, res) => {
-  if (!typeof req.body.username == "string" || isNaN(req.body.score)) {
-    console.log("No Username Given");
-    return res.status(400).json({
-      message: 'Invalid Data Type'
-    });
-  }
+  // if (!typeof req.body.username == "string" || isNaN(req.body.score)) {
+  //   console.log("No Username Given");
+  //   return res.status(400).json({
+  //     message: 'Invalid Data Type'
+  //   });
+  // }
+
+  console.log('Hello');
 
   const snakeScore = new snakeScores({
     username: req.body.username,
@@ -73,12 +76,12 @@ router.post("/api/users/", (req, res) => {
   });
 
   // ToDo add working validation for username
-  if (!newUser.username) {
-    console.log("No Username Given");
-    return res.status(400).json({
-      message: 'Please include a username and score'
-    });
-  }
+  // if (!newUser.username) {
+  //   console.log("No Username Given");
+  //   return res.status(400).json({
+  //     message: 'Please include a username and score'
+  //   });
+  // }
 
   snakeScore.save(function (err, doc) {
     if (err) return console.error(err);
