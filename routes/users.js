@@ -4,7 +4,6 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 const snakeScoresSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -12,14 +11,14 @@ const snakeScoresSchema = new Schema({
   score: Number
 });
 
-console.log(process.env.DB_URL);
-
 const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 // connect to db
 const dbConnect = async () => {
   try {
     await mongoose.connect(process.env.DB_URL, {
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
     });
   } catch (error) {
     console.error(error);
