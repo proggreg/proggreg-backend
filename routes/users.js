@@ -12,7 +12,7 @@ const snakeScoresSchema = new Schema({
   score: Number
 });
 
-console.log(process.env.DB - URL);
+console.log(process.env.DB_URL);
 
 const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 // connect to db
