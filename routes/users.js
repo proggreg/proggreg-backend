@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const snakeScoresSchema = new Schema({
-  userid: ObjectId,
+  _id: mongoose.Schema.Types.ObjectId,
   username: String,
   score: Number
 });
@@ -17,19 +17,10 @@ console.log(process.env.DB_URL);
 const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 // connect to db
 const dbConnect = async () => {
-  let db = null;
   try {
-    db = await mongoose.connect(process.env.DB_URL, {
+    await mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true
-    })
-    db.on('connected', function () {
-      console.log('Connected to Database');
-    })
-    db.on('disconnected', function () {
-      console.log('database is disconnected successfully');
-    })
-
-    conn.on('error', console.error.bind(console, 'connection error:'));
+    });
   } catch (error) {
     console.error(error);
   }
@@ -37,6 +28,8 @@ const dbConnect = async () => {
 
 // TODO Add error handling for connection to db
 dbConnect();
+
+mongoose.connection.on('error', (err) => console.log(err));
 
 
 
@@ -85,6 +78,7 @@ router.post("/api/users/", (req, res) => {
   console.log('POST');
 
   const snakeScore = new snakeScores({
+    _id: new mongoose.Types.ObjectId(),
     username: req.body.username,
     score: parseInt(req.body.score)
   });
