@@ -19,9 +19,17 @@ const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 const dbConnect = async () => {
   let db = null;
   try {
-    await mongoose.connect(process.env.DB_URL, {
+    db = await mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true
     })
+    db.on('connected', function () {
+      console.log('Connected to Database');
+    })
+    db.on('disconnected', function () {
+      console.log('database is disconnected successfully');
+    })
+
+    conn.on('error', console.error.bind(console, 'connection error:'));
   } catch (error) {
     console.error(error);
   }
