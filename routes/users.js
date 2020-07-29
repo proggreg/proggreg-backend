@@ -34,15 +34,18 @@ dbConnect();
 
 // Get All Users
 router.get("/api/users", async (req, res, next) => {
-  const scores = await snakeScores.find({});
+  // const scores = await snakeScores.find({});
+  return res.status(200).json({
+    message: "Hello"
+  });
 
-  if (scores.length == 0) {
-    res.status(404).json({
-      message: "No Scores Found"
-    });
-  } else {
-    res.json(scores);
-  }
+  // if (scores.length == 0) {
+  //   return res.status(404).json({
+  //     message: "No Scores Found"
+  //   });
+  // } else {
+  //   return res.json(scores);
+  // }
 });
 
 
