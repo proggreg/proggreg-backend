@@ -67,7 +67,7 @@ router.post("/api/users/", (req, res) => {
   //   });
   // }
 
-  console.log('Hello');
+  console.log('POST');
 
   const snakeScore = new snakeScores({
     username: req.body.username,
@@ -84,11 +84,16 @@ router.post("/api/users/", (req, res) => {
 
   snakeScore.save(function (err, doc) {
 
-    console.log(err);
-    if (err) return console.error(err);
-    res.status(200).json({
-      message: "new score added"
-    });
+    console.log(doc);
+    if (err) {
+      console.error(err)
+    } else {
+      console.error("Ok")
+      res.status(200).json({
+        message: "new score added",
+        username: doc
+      });
+    }
   });
 
 

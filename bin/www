@@ -29,7 +29,8 @@ var server = http.createServer(app);
 server.listen(process.env.PORT || port, () => {
   var host = server.address().address;
   var port = server.address().port;
-  console.log("Example app listening at http://%s:%s", host, port)
+  server.address().proto
+  console.log(`Example app listening at http://:%s`, host, port)
 });
 server.on('error', onError);
 server.on('listening', onListening);
