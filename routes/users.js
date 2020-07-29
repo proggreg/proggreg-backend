@@ -34,10 +34,14 @@ dbConnect();
 
 // Get All Users
 router.get("/api/users", async (req, res, next) => {
-  // const scores = await snakeScores.find({});
-  res.status(200).json({
-    message: "Hello"
-  });
+  const scores = await snakeScores.find({});
+
+  console.log(scores);
+
+  return res.status(200).json(scores);
+
+
+
 
   // if (scores.length == 0) {
   //   return res.status(404).json({
@@ -84,20 +88,24 @@ router.post("/api/users/", (req, res) => {
   //     message: 'Please include a username and score'
   //   });
   // }
+  try {
+    snakeScore.save(function (err, doc) {
+      console.log(doc);
+      if (err) {
+        console.error(err)
+        res.status(404);
+      } else {
+        console.error("Ok")
+        res.status(200).json({
+          message: "new score added",
+          username: doc
+        });
+      }
+    });
+  } catch (error) {
+    return res.status(404);
+  }
 
-  snakeScore.save(function (err, doc) {
-
-    console.log(doc);
-    if (err) {
-      console.error(err)
-    } else {
-      console.error("Ok")
-      res.status(200).json({
-        message: "new score added",
-        username: doc
-      });
-    }
-  });
 
 
 });
