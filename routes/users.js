@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+// TODO Add more attributes eg. Date/Time, Device
 const snakeScoresSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   username: String,
@@ -15,7 +16,7 @@ const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 // connect to db
 const dbConnect = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
+    await mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false
@@ -30,51 +31,29 @@ dbConnect();
 
 mongoose.connection.on('error', (err) => console.log(err));
 
-
-
-// Get All Users
+// Get All Scores in sorted order with scores descending
 router.get("/api/users", async (req, res, next) => {
-  const scores = await snakeScores.find({});
+  const scores = await snakeScores.find().sort({
+    score: -1
+  });
 
-  console.log(scores);
-
-  return res.status(200).json(scores);
-
-
-
-
-  // if (scores.length == 0) {
-  //   return res.status(404).json({
-  //     message: "No Scores Found"
-  //   });
-  // } else {
-  //   return res.json(scores);
-  // }
+  if (scores.length == 0) {
+    return res.status(404).json({
+      message: "No Scores Found"
+    });
+  } else {
+    return res.json(scores);
+  }
 });
-
-
-// TODO show single users scores
-
-// Get Single User
-// router.get("/api/users/:id", (req, res, next) => {
-//   if (req.param.id)
-//     res.json(users.filter((user) => user.id === parseInt(req.params.id)));
-//   else
-//     res.status(400).json({
-//       message: `no user with id ${req.params.id} found`
-//     });
-// });
 
 // Create User
 router.post("/api/users/", (req, res) => {
-  // if (!typeof req.body.username == "string" || isNaN(req.body.score)) {
-  //   console.log("No Username Given");
-  //   return res.status(400).json({
-  //     message: 'Invalid Data Type'
-  //   });
-  // }
-
-  console.log('POST');
+  if (!typeof req.body.username == "string" || isNaN(req.body.score)) {
+    console.log("No Username Given");
+    res.status(400).json({
+      message: 'Invalid Data Type'
+    });
+  }
 
   const snakeScore = new snakeScores({
     _id: new mongoose.Types.ObjectId(),
@@ -82,13 +61,6 @@ router.post("/api/users/", (req, res) => {
     score: parseInt(req.body.score)
   });
 
-  // ToDo add working validation for username
-  // if (!newUser.username) {
-  //   console.log("No Username Given");
-  //   return res.status(400).json({
-  //     message: 'Please include a username and score'
-  //   });
-  // }
   try {
     snakeScore.save(function (err, doc) {
       console.log(doc);
@@ -106,9 +78,6 @@ router.post("/api/users/", (req, res) => {
   } catch (error) {
     return res.status(404);
   }
-
-
-
 });
 
 
@@ -125,7 +94,6 @@ router.post("/api/users/", (req, res) => {
 //         user.score = (updateuser.score > user.score) ? updateuser.score : user.score;
 //       }
 //     });
-
 //     res.json({
 //       message: `user's score updated, current score is ${user.score}`
 //     });
