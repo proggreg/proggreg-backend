@@ -1,14 +1,14 @@
 require('dotenv').config();
 var createError = require("http-errors");
 var express = require("express");
+var app = express();
 var path = require("path");
 var cookieParser = require("cookie-parser");
-const {
-  read
-} = require("fs");
+var dbConnect = require('./db');
 
-var app = express();
+dbConnect();
 
+// TODO When deploying to prod change this
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');
@@ -20,7 +20,8 @@ app.use((req, res, next) => {
 });
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var usersRouter = require("./routes/snakescores");
+var emailRouter = require("./routes/email");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/", usersRouter);
+app.use("/email", emailRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
