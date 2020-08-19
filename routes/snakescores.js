@@ -39,7 +39,6 @@ router.get("/api/users", async (req, res, next) => {
 // Create User
 router.post("/api/users/", (req, res) => {
   if (!typeof req.body.username == "string" || isNaN(req.body.score)) {
-    console.log("No Username Given");
     res.status(400).json({
       message: 'Invalid Data Type'
     });
@@ -53,12 +52,10 @@ router.post("/api/users/", (req, res) => {
 
   try {
     snakeScore.save(function (err, doc) {
-      console.log(doc);
       if (err) {
         console.error(err)
         res.status(404);
       } else {
-        console.error("Ok")
         res.status(200).json({
           message: "new score added",
           username: doc
