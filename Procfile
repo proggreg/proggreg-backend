@@ -1,1 +1,1 @@
-web: node --insecure-http-parser ./bin/www
+web: node ./bin/www
