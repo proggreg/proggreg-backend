@@ -16,9 +16,6 @@ const snakeScoresSchema = new Schema({
 const snakeScores = mongoose.model('snakeScores', snakeScoresSchema);
 // connect to db
 
-
-
-
 mongoose.connection.on('error', (err) => console.log(err));
 
 // Get All Scores in sorted order with scores descending
