@@ -64,26 +64,4 @@ router.post("/api/users/", (req, res) => {
   }
 });
 
-
-// TODO not needed for snake game scores but maybe useful for a future feature 
-// Update Score
-// router.put("/:id", (req, res) => {
-//   const found = users.some(user => user.id === parseInt(req.params.id));
-
-//   if (found) {
-//     const updateuser = req.body;
-//     users.forEach(user => {
-//       if (user.id === parseInt(req.body.id)) {
-//         user.name = updateuser.name ? updateuser.name : user.name;
-//         user.score = (updateuser.score > user.score) ? updateuser.score : user.score;
-//       }
-//     });
-//     res.json({
-//       message: `user's score updated, current score is ${user.score}`
-//     });
-//   }
-// });
-
-
-
 module.exports = router;

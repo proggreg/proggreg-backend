@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/snakescores");
 var emailRouter = require("./routes/email");
+var fileRouter = require("./routes/file");
 
 
 // app.use(logger('dev'));
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/", usersRouter);
 app.use("/email", emailRouter);
+app.use("/get-file", fileRouter);
 
 
 
