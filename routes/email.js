@@ -22,14 +22,16 @@ var smtpTransport = nodemailer.createTransport({
 router.post('/send', (req, res, next) => {
 
     let mailOptions = {
-        from: req.body.from,
         to: 'gregfieldwork@gmail.com',
+        from: req.body.email,
         subject: req.body.subject,
-        text: req.body.msg
+        text: req.body.message + "\n From: " + req.body.name + "\n Email: " + req.body.email
     }
 
     smtpTransport.sendMail(mailOptions, function (err) {
         // TODO better error handling may be needed
+
+        console.log(mailOptions);
         if (err) {
             console.log({
                 err
