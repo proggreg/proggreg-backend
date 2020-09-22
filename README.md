@@ -1,7 +1,7 @@
 Backend for my website, made with express connected to MongoDB.
 
-Installion
-npm install
+##Installion
+#npm install
 
 Development
 npm run dev
