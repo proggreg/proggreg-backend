@@ -8,7 +8,7 @@ const {
 } = require('process');
 
 router.get('/CV', (req, res, next) => {
-    var cv = path.resolve('../proggreg-backend/asets/CV.pdf');
+    var cv = path.resolve('../proggreg-backend/assets/CV.pdf');
     fs.readFile(cv, (err, data) => {
         if (err) {
             res.status(404).json({
