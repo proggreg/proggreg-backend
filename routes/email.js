@@ -30,8 +30,6 @@ router.post('/send', (req, res, next) => {
 
     smtpTransport.sendMail(mailOptions, function (err) {
         // TODO better error handling may be needed
-
-        console.log(mailOptions);
         if (err) {
             console.log({
                 err
